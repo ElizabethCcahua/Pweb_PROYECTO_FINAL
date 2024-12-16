@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <div class="page-heading about-page-heading" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-content">
+                        <h2>Acerca de nuestra empresa</h2>
+                        <span>Impresionante, limpia &amp; y creativa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <section class="our-services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2>Otros servicios</h2>
+                        <span>El cuidado de los detalles es lo que hace que Caden Kelly sea diferente de los demás temas.</span>
+                    </div>
+                </div>
+                {% for service in services %}
+                    <div class="col-lg-4">
+                        <div class="service-item">
+                            <h4>{{ service.title }}</h4>
+                            <p>{{ service.content }}</p>
+                            <img src="{{ service.image.url }}" alt="">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
