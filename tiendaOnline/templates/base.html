@@ -1,0 +1,271 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+        <title>{% block title %} Caden Kelly {% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'css/templatemo-hexashop.css' %}">
+        <link rel="stylesheet" href="{% static 'css/owl-carousel.css' %}">
+        <link rel="stylesheet" href="{% static 'css/lightbox.css' %}">
+        <link rel="stylesheet" href="{% static 'css/base1.css' %}">
+    </head>
+    
+    <body>
+        <div id="preloader">
+            <div class="jumper">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>  
+        <header class="header-area header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="main-nav">
+                            <a href="{% url 'home' %}" class="logo1">
+                                <img src="{% static 'images/logo1.jpg' %}" class="logo1">
+                                
+                            </a>
+                            
+    
+                            <ul class="nav">
+                                <li class="scroll-to-section"><a href="{% url 'home' %}">Inicio</a></li>
+                                <li class="scroll-to-section"><a href="{% url 'store' %}">Tienda</a></li>
+                                <li class="submenu">
+                                    <a href="javascript:;">Paginas</a>
+                                    <ul>
+                                        <li><a href="{% url 'service' %}">Servicios</a></li>
+                                        <li><a href="{% url 'contact' %}">Acerca de nosotros</a></li>
+                                    </ul>
+                                </li>
+                                
+                                {% if user.is_authenticated %}
+                                    <li class="scroll-to-section"><a>Hola!!! {{ user.username }}</a></li>
+                                    <li class="scroll-to-section"><a href="{% url 'logout' %}">Salir</a></li>
+                                    <li class="scroll-to-section"><a href="{% url 'cart:view_cart' %}">carrito</li>
+                                {% else %}
+                                    <li class="scroll-to-section"><a href="{% url 'register' %}">Registrate</a></li>
+                                    <li class="scroll-to-section"><a href="{% url 'login' %}">Inicia Secion</a></li>
+                                {% endif %}
+                            </ul>        
+                            <a class='menu-trigger'>
+                                <span>Menu</span>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {% block main %}
+            <div class="main-banner" id="top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="left-content">
+                                <div class="thumb">
+                                    <div class="inner-content">
+                                        <h4>Somos Caden Kelly</h4>
+                                        <span>Increible, limpio &amp; creativo</span>
+                                        <div class="main-border-button">
+                                            <a href="#">Compra ahora!</a>
+                                        </div>
+                                    </div>
+                                    <img src="{% static 'images/left-banner-image.jpg' %}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="right-content">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="right-first-image">
+                                            <div class="thumb">
+                                                <div class="inner-content">
+                                                    <h4>Dama</h4>
+                                                    <span>La mejor ropa para mujeres</span>
+                                                </div>
+                                                <div class="hover-content">
+                                                    <div class="inner">
+                                                        <h4>Dama</h4>
+                                                        <p></p>
+                                                        <div class="main-border-button">
+                                                            <a href="#women">Ver mas</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <img src="{% static 'images/baner-right-image-01.jpg' %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="right-first-image">
+                                            <div class="thumb">
+                                                <div class="inner-content">
+                                                    <h4>Hombre</h4>
+                                                    <span>La mejor ropa para hombres</span>
+                                                </div>
+                                                <div class="hover-content">
+                                                    <div class="inner">
+                                                        <h4>Hombre</h4>
+                                                        <p></p>
+                                                        <div class="main-border-button">
+                                                            <a href="#men">Ver mas</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <img src="{% static 'images/baner-right-image-02.jpg' %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="right-first-image">
+                                            <div class="thumb">
+                                                <div class="inner-content">
+                                                    <h4>Niños</h4>
+                                                    <span>La mejor ropa para niños</span>
+                                                </div>
+                                                <div class="hover-content">
+                                                    <div class="inner">
+                                                        <h4>Niños</h4>
+                                                        <p></p>
+                                                        <div class="main-border-button">
+                                                            <a href="#kids">Ver mas</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <img src="{% static 'images/baner-right-image-03.jpg' %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="right-first-image">
+                                            <div class="thumb">
+                                                <div class="inner-content">
+                                                    <h4>Accessorios</h4>
+                                                    <span>Accesorios de tendencia</span>
+                                                </div>
+                                                <div class="hover-content">
+                                                    <div class="inner">
+                                                        <h4>Accessorios</h4>
+                                                        <p></p>
+                                                        <div class="main-border-button">
+                                                            <a href="#">Ver mas</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <img src="{% static 'images/baner-right-image-04.jpg' %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+        
+        <div id="content">
+            {% block content %}
+            
+            {% endblock %}
+        </div>
+        
+        
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="first-item">
+                            <div class="logo1">
+                                <img src="{% static 'images/logo1.jpg' %}" alt="hexashop ecommerce templatemo">
+                            </div>
+                            <ul>
+                                <li><a href="#">San Camilo 320 int B, Arequipa</a></li>
+                                <li><a href="#">Caden Kelly@company.com</a></li>
+                                <li><a href="#">905-460-670</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <h4>Shopping &amp; Categories</h4>
+                        <ul>
+                            <li><a href="#">Men’s Shopping</a></li>
+                            <li><a href="#">Women’s Shopping</a></li>
+                            <li><a href="#">Kid's Shopping</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3">
+                        <h4>Accesde</h4>
+                        <ul>
+                            <li><a href="#">Inicio</a></li>
+                            <li><a href="#">Acerca de nosotros Us</a></li>
+                            <li><a href="#">Ayuda</a></li>
+                            <li><a href="#">Contactanos</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3">
+                        <h4>Help &amp; Informacion</h4>
+                        <ul>
+                            <li><a href="#">Ayuda</a></li>
+                            <li><a href="#">FAQ's</a></li>
+                            <li><a href="#">Carrito</a></li>
+                            <li><a href="#">Terminos y condiciones</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="under-footer">
+                            <p>Copyright © 2022 UrbanThreads Co., Ltd. All Rights Reserved. 
+                            
+                            <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+        <script src="{% static 'js/popper.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/owl-carousel.j' %}s"></script>
+        <script src="{% static 'js/accordions.j' %}s"></script>
+        <script src="{% static 'js/datepicker.j' %}s"></script>
+        <script src="{% static 'js/scrollreveal.min.j' %}s"></script>
+        <script src="{% static 'js/waypoints.min.j' %}s"></script>
+        <script src="{% static 'js/jquery.counterup.min.j' %}s"></script>
+        <script src="{% static 'js/imgfix.min.js' %}"></script> 
+        <script src="{% static 'js/slick.js' %}"></script> 
+        <script src="{% static 'js/lightbox.js' %}"></script> 
+        <script src="{% static 'js/isotope.js' %}"></script> 
+        <script src="{% static 'js/custom.js' %}"></script>
+        <script>
+            $(function() {
+                var selectedClass = "";
+                $("p").click(function(){
+                    selectedClass = $(this).attr("data-rel");
+                    $("#portfolio").fadeTo(50, 0.1);
+                        $("#portfolio div").not("."+selectedClass).fadeOut();
+                    setTimeout(function() {
+                        $("."+selectedClass).fadeIn();
+                        $("#portfolio").fadeTo(50, 1);
+                    }, 500);
+                });
+            });
+        </script>
+    </body>
+</html>
