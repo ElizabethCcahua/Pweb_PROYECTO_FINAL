@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Login</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    {% load static %} <!-- Carga el tag static -->
+    <style>
+        body {
+            background-color: #fce4ec; /* Pale pink background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px; /* Ajusta el ancho si es necesario */
+            position: relative;
+        }
+
+        .logo1 {
+            margin-bottom: 20px; /* Espacio entre el logo y el texto */
+        }
+
+        .logo1 img {
+            width: 350px; /* Tamaño ajustado del logo */
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Centra la imagen horizontalmente */
+        }
+
+        .welcome h2 {
+            color: #e91e63; /* Darker pink for text */
+            margin-bottom: 20px;
+        }
+
+        form input[type="text"], 
+        form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #e91e63;
+            border-radius: 5px;
+        }
+
+        form input[type="submit"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            background-color: #e91e63;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #d81b60; /* Slightly darker pink */
+        }
+
+        .messages h3 {
+            color: #e91e63;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo1">
+            <img src="{% static 'images/logo1.jpg' %}" alt="Company Logo">
+        </div>
+        <div class="welcome">
+            <h2>Hola Bienvenido nuevamente</h2>
+        </div>
+        <form action="login" method="POST"> 
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username"><br>
+            <input type="password" name="password" placeholder="Password"><br>
+            <input type="submit" value="Login">
+        </form>
+        <div class="messages">
+            {% for message in messages %}
+                <h3>{{ message }}</h3>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
