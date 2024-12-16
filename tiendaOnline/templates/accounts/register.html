@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    {% load static %} <!-- Carga el tag static -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Enlace a Google Fonts -->
+    <style>
+        body {
+            background-color: #fce4ec; /* Pale pink background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
+        }
+
+        .register-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            box-sizing: border-box;
+        }
+
+        .logo1 img {
+            width: 300px; /* Tamaño del logo */
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Centra horizontalmente */
+            transform: translateX(-20px); /* Mueve la imagen hacia la izquierda */
+        }
+
+        .welcome h2 {
+            color: #e91e63; /* Darker pink for text */
+            margin-bottom: 20px;
+        }
+
+        form input[type="text"], 
+        form input[type="email"], 
+        form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #e91e63;
+            border-radius: 5px;
+        }
+
+        form input[type="submit"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            background-color: #e91e63;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #d81b60; /* Slightly darker pink */
+        }
+
+        .messages h3 {
+            color: #e91e63;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="logo1">
+            <img src="{% static 'images/logo1.jpg' %}" alt="Company Logo">
+        </div>
+        <div class="welcome">
+            <h2>Bienvenido a esta familia</h2>
+        </div>
+        <form action="register" method="POST"> 
+            {% csrf_token %}
+            <input type="text" name="first_name" placeholder="First Name"><br>
+            <input type="text" name="last_name" placeholder="Last Name"><br>
+            <input type="text" name="username" placeholder="Username"><br>
+            <input type="email" name="email" placeholder="Email"><br>
+            <input type="password" name="password1" placeholder="Password"><br>
+            <input type="password" name="password2" placeholder="Confirm Password"><br>
+            <input type="submit" value="Register">
+        </form>
+        <div class="messages">
+            {% for message in messages %}
+                <h3>{{ message }}</h3>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
