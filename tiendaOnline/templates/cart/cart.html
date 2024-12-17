@@ -16,46 +16,50 @@
 {% endblock %}
 
 {% block content %}
-<section class="section" id="products">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-heading">
-                        <h2>Su carrito</h2>
-                        <span>Estos son los artículos en su carrito.</span>
-                    </div>
-                </div>
-            </div>
-            
-                {% if request.session.cart.items %}
-                    <div class="container">
-                        <div class="row">
-                            {% for key, value in request.session.cart.items %}
-                                <div class="col-lg-4">
-                                    <div class="item">
-                                        <div class="thumb">
-                                            <div class="hover-content">
-                                                <ul>
-                                                    <li><a href="{% url 'cart:add' value.id %}"><i class="fa fa-plus"></i></a></li>
-                                                    <li><a href="{% url 'cart:subtract' value.id %}"><i class="fa fa-minus"></i></a></li>
-                                                    <li><a href="{% url 'cart:delete' value.id %}"><i class="fa fa-trash"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <img src="{{ value.image }}" alt="">
-                                        </div>
-                                        <div class="down-content">
-                                            <h4>{{ value.name }}</h4>
-                                            <span>$ {{ value.price }}</span>
-                                            <span> Cantidad: {{ value.cant }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>                  
-                {% else %}
-                    <p>Your cart is empty.</p>
-                {% endif %}
-            </div>
-    </section>
+<h2>Tu Carrito de Compras</h2>
+
+{% if cart.cart %}
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Imagen</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, item in cart.cart.items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>
+                    {% if item.image %}
+                        <img src="{{ item.image }}" alt="{{ item.name }}" width="50">
+                    {% else %}
+                        Sin imagen
+                    {% endif %}
+                </td>
+                <td>{{ item.cant }}</td>
+                <td>${{ item.price|floatformat:2 }}</td>
+                <td>${{ item.cant|floatformat:2 }}</td>
+                <td>
+                    <!-- Botones de acción -->
+                    <a href="{% url 'cart:add' item.id %}">Agregar</a> |
+                    <a href="{% url 'cart:subtract' item.id %}">Restar</a> |
+                    <a href="{% url 'cart:delete' item.id %}">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Total: ${{ total_cart_amount|floatformat:2 }}</h3>
+
+    <!-- Botón para limpiar el carrito -->
+    <a href="{% url 'cart:clear' %}">Vaciar Carrito</a>
+
+{% else %}
+    <p>El carrito está vacío. ¡Agrega productos para comenzar!</p>
+{% endif %}
 {% endblock %}
