@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .cart import Cart
 from store.models import Product
 from django.shortcuts import redirect
+from django.http import Http404
 
 def view_cart(request):
     cart = Cart(request)

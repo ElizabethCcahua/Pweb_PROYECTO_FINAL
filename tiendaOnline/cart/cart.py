@@ -8,21 +8,20 @@ class Cart:
 
         self.cart = cart
     
-    def add(self,product):
-        if(str(product.id) not in self.cart.keys()):
-            self.cart[product.id]={
-                "id":product.id,
-                "name":product.name,
-                "price":str(product.price),
-                "cant":1,
-                "image":product.image.url
+    def add(self, product):
+        product_id = str(product.id)
+        if product_id not in self.cart:
+            self.cart[product_id] = {
+                "id": product.id,
+                "name": product.name,
+                "price": str(product.price),
+                "cant": 1,
+                "image": product.image.url if product.image else "",
             }
         else:
-            for key, value in self.cart.items():
-                if key==str(product.id):
-                    value["cant"]=value["cant"]+1
-                    value["price"]=float(value["price"])+product.price
-                    break
+            self.cart[product_id]["cant"] += 1
+            self.cart[product_id]["price"] = float(self.cart[product_id]["price"]) + product.price
+
         self.save_cart()
 
     def save_cart(self):
