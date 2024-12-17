@@ -16,10 +16,71 @@
 {% endblock %}
 
 {% block content %}
-<h2>Tu Carrito de Compras</h2>
+<style>
+    /* Estilos para la tabla */
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px auto;
+        border: 1px solid #ddd;
+    }
 
-{% if cart.cart %}
-    <table>
+    .cart-table th, .cart-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .cart-table th {
+        background-color: #f4f4f4;
+    }
+
+    .cart-table img {
+        max-width: 100px;
+        height: auto;
+    }
+
+    .cart-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .cart-container {
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #fff;
+        max-width: 80%;
+    }
+
+    .action-links a {
+        text-decoration: none;
+        color: #007BFF;
+        margin: 0 5px;
+    }
+
+    .action-links a:hover {
+        color: #0056b3;
+    }
+
+    .cart-total {
+        text-align: right;
+        font-size: 1.2em;
+        margin-top: 15px;
+    }
+
+    .empty-cart {
+        text-align: center;
+        font-size: 1.1em;
+        margin: 20px;
+    }
+</style>
+
+<div class="cart-container">
+    <h2>Tu Carrito de Compras</h2>
+
+    {% if cart.cart %}
+    <table class="cart-table">
         <thead>
             <tr>
                 <th>Producto</th>
@@ -36,7 +97,7 @@
                 <td>{{ item.name }}</td>
                 <td>
                     {% if item.image %}
-                        <img src="{{ item.image }}" alt="{{ item.name }}" width="50">
+                        <img src="{{ item.image }}" alt="{{ item.name }}">
                     {% else %}
                         Sin imagen
                     {% endif %}
@@ -44,22 +105,56 @@
                 <td>{{ item.cant }}</td>
                 <td>${{ item.price|floatformat:2 }}</td>
                 <td>${{ item.cant|floatformat:2 }}</td>
-                <td>
-                    <!-- Botones de acción -->
-                    <a href="{% url 'cart:add' item.id %}">Agregar</a> |
-                    <a href="{% url 'cart:subtract' item.id %}">Restar</a> |
-                    <a href="{% url 'cart:delete' item.id %}">Eliminar</a>
+                <td class="action-links">
+                    <!-- Botones con AJAX -->
+                    <a href="#" class="update-cart" data-url="{% url 'cart:add' item.id %}">Aumentar</a>
+                    <a href="#" class="update-cart" data-url="{% url 'cart:subtract' item.id %}">Restar</a>
+                    <a href="#" class="update-cart" data-url="{% url 'cart:delete' item.id %}">Eliminar</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <h3>Total: ${{ total_cart_amount|floatformat:2 }}</h3>
 
+    <div class="cart-total">
+        <h3>Total: ${{ total_cart_amount|floatformat:2 }}</h3>
+    </div>
     <!-- Botón para limpiar el carrito -->
-    <a href="{% url 'cart:clear' %}">Vaciar Carrito</a>
+    <div class="cart-total">
+        <a href="#" class="update-cart" data-url="{% url 'cart:clear' %}">Vaciar Carrito</a>
+    </div>
 
-{% else %}
-    <p>El carrito está vacío. ¡Agrega productos para comenzar!</p>
-{% endif %}
+    {% else %}
+    <p class="empty-cart">El carrito está vacío. ¡Agrega productos para comenzar!</p>
+    {% endif %}
+</div>
+
+<!-- JavaScript para manejar acciones con AJAX -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const updateCartLinks = document.querySelectorAll('.update-cart');
+
+        updateCartLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = this.getAttribute('data-url');
+
+                fetch(url, {
+                    method: "GET",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Recargar el contenido de la página sin redirección
+                        location.reload();
+                    } else {
+                        alert("Error al actualizar el carrito.");
+                    }
+                });
+            });
+        });
+    });
+</script>
 {% endblock %}
