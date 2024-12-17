@@ -9,19 +9,20 @@ class Cart:
         self.cart = cart
     
     def add(self, product):
+        """Agregar producto al carrito. Mantener precio unitario fijo.
+        """
         product_id = str(product.id)
         if product_id not in self.cart:
             self.cart[product_id] = {
                 "id": product.id,
                 "name": product.name,
-                "price": str(product.price),
+                "price": float(product.price),  # Mantener precio unitario
                 "cant": 1,
-                "image": product.image.url if product.image else "",
+                "image": product.image.url if product.image else ""
             }
         else:
+            # Aumentar cantidad
             self.cart[product_id]["cant"] += 1
-            self.cart[product_id]["price"] = float(self.cart[product_id]["price"]) + product.price
-
         self.save_cart()
 
     def save_cart(self):
@@ -35,15 +36,20 @@ class Cart:
             self.save_cart()
 
     def subtract_product(self, product):
-        for key, value in self.cart.items():
-                if key==str(product.id):
-                    value["price"]=float(value["price"])-product.price
-                    value["cant"]=value["cant"]-1
-                    if value["cant"]<1:
-                        self.delete(product)
-                    break
+        """
+        Restar producto del carrito.
+        """
+        product_id = str(product.id)
+        if product_id in self.cart:
+            self.cart[product_id]["cant"] -= 1
+            if self.cart[product_id]["cant"] < 1:
+                self.delete(product)  # Eliminar si cantidad llega a 0
         self.save_cart()
 
     def clean_cart(self):
-        self.session["cart"]={}
-        self.session.modified=True
+        """
+        Vaciar todo el carrito.
+        """
+        self.session["cart"] = {}
+        self.session.modified = True
+
