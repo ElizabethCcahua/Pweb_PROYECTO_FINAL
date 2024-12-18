@@ -4,6 +4,8 @@ from store.models import Product
 from django.shortcuts import redirect
 from django.http import Http404
 from django.shortcuts import render
+from tiendaApp.models import Order, OrderItem
+from django.contrib.auth.decorators import login_required
 
 def view_cart(request):
     cart = Cart(request)
@@ -58,6 +60,29 @@ def clear_cart(request):
     cart.clean_cart()
     return redirect("cart:view_cart")
 
+@login_required
 def make_order(request):
-    # Función vacía para "Hacer Pedido"
+    cart = Cart(request)
+    if not cart.cart:
+        return redirect("cart:view_cart")
+
+    # Crear el pedido
+    order = Order.objects.create(
+        user=request.user,
+        total_amount=sum(float(item["price"]) * int(item["cant"]) for item in cart.cart.values())
+    )
+
+    # Agregar productos al pedido
+    for item in cart.cart.values():
+        product = Product.objects.get(id=item["id"])
+        OrderItem.objects.create(
+            order=order,
+            product=product,
+            quantity=item["cant"],
+            price=float(item["price"])
+        )
+
+    # Vaciar el carrito
+    cart.clean_cart()
+
     return redirect("cart:view_cart")
